@@ -18,6 +18,11 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+// Variable for current version
+var (
+	version string 
+)
+
 // File name in user's home directory where we store the settings.
 const defaultProfile = `.moprc`
 
@@ -193,6 +198,15 @@ func main() {
 	usr, err := user.Current()
 	if err != nil {
 		panic(err)
+	}
+
+	var showVersion bool
+	flag.BoolVar(&showVersion, "version", false, "prints mop version")
+	flag.Parse()
+
+	if showVersion {
+	    fmt.Printf("mop-%s\n", version)
+	    os.Exit(0)
 	}
 
 	profileName := flag.String("profile", path.Join(usr.HomeDir, defaultProfile), "path to profile")
